@@ -9,15 +9,17 @@ Sistem menyimpan "database*" yang berisi key dan result dimana key berisi kata k
 Jadi Secara sederhana, 
 - User memasukan sebuah query
 - sistem akan mencari key pada database* yang memiliki tingkat kemiripan yang paling tinggi dengan query tersebut (menggunakan equal dan contains)
-- lalu Sistem akan menampilkan result sesuai dengan key yang memiliki kemiripan paling tinggi dengan query
 
-### Case 1 (Jawaban tidak sesuai)
+#### Case 1 (Jawaban ditemukan)
+- Sistem akan menampilkan result sesuai dengan key yang memiliki kemiripan paling tinggi dengan query
+
+#### Case 2 (Jawaban tidak sesuai)
 - jika tidak sesuai, user bisa kembali membalas NO, WRONG, atau N 
 - Kemudian Sistem akan meminta jawaban bagaimana sistem tersebut seharusnya menjawab
 - lalu user memasukkan jawaban yang benar
 - kemudian Sistem akan menambahkan data tersebut ke database dengan key=query sebelumnya dan result adalah jawaban user tentang bagaimana sistem seharusnya menjawab
 
-### Case 2 (Jawaban tidak ada)
+#### Case 3 (Jawaban tidak ada)
 - jika sistem tidak menemukan jawabannya maka sistem akan meminta user untuk memasukkan jawaban yang seharusnya
 - kemudian user memasukkan jawaban yang seharusnya 
 - kemudian Sistem akan menambahkan data tersebut ke database dengan key=query sebelumnya dan result adalah jawaban user tentang bagaimana sistem seharusnya menjawab
