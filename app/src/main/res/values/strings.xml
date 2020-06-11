@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Project Enzy</string>
+    <string name="submit">Submit</string>
+    <string name="debug_mode">Debug Mode</string>
+    <string name="ask_me">Ask Me</string>
+    <string name="hello">Hello World!</string>
+    <string name="toogledebug">Debug Mode : </string>
+    <string name="should_answer">I Should answer : ...</string>
+</resources>
