@@ -2,6 +2,7 @@ package id.nganggur.projectenzy;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.util.Log;
 
 import java.io.File;
@@ -10,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 
@@ -21,25 +23,34 @@ public class Brain {
     private String TAG = "DebugMode";
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
-    private String debugCode = "debugMode";
+    private String debugCode = "debugMode", langCode = "langCode";
     String prevQuery = "";
 
     boolean debugMode;
     boolean learnMode = false;
+    boolean bahasa;
 
-    String[] wh = new String[6];
-
-    public void setWh() {
-        wh[0] = "what";
-        wh[1] = "who";
-        wh[2] = "when";
-        wh[3] = "where";
-        wh[4] = "why";
-        wh[5] = "how";
-
+    public boolean isBahasa() {
+        return bahasa;
     }
 
-
+    public void setBahasa(boolean bahasa) {
+        this.bahasa = bahasa;
+        String languageToLoad;
+        if (bahasa){
+            languageToLoad = "ID"; // your language
+        }else{
+            languageToLoad = "en";
+        }
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        mContext.getResources().updateConfiguration(config,
+                mContext.getResources().getDisplayMetrics());
+        editor.putBoolean(langCode,this.bahasa);
+        editor.commit();
+    }
 
     public Brain(Context context) {
         mContext = context;
@@ -48,17 +59,13 @@ public class Brain {
         editor = prefs.edit();
 
         this.debugMode = prefs.getBoolean(debugCode,false);
+        this.bahasa = prefs.getBoolean(langCode,false);
 
         if (debugMode) {
             Log.d(TAG, "Debug Mode : " + debugMode);
         }
-
-
-        setWh();
         readFile();
-
-
-//        commonKnowledge();
+        commonKnowledge();
     }
 
     public void setDebugMode(boolean debugMode) {
@@ -66,11 +73,9 @@ public class Brain {
         Log.d(TAG, "setDebugMode: " + debugMode);
         editor.putBoolean(debugCode,this.debugMode);
         editor.commit();
-
     }
 
     public String toggleDebug() {
-//        this.debugMode = !this.debugMode;
         setDebugMode(!isDebugMode());
         return mContext.getString(R.string.toogledebug) + this.debugMode;
     }
@@ -80,7 +85,6 @@ public class Brain {
         for (int i = 0; i < knowledges.size(); i++) {
             temp.add(knowledges.get(i).getQuery() + separator + knowledges.get(i).getResult());
         }
-
         Set<String> set = new HashSet<>();
         set.addAll(temp);
         editor.putStringSet(listName, set);
@@ -95,36 +99,29 @@ public class Brain {
 
     public void readFile() {
         ArrayList<String> temp = new ArrayList<>();
-
-
         Set<String> set = prefs.getStringSet(listName, null);
         if (set!=null){
             temp.addAll(set);
             knowledges.clear();
-
             for (int i = 0; i < temp.size() ; i++) {
                 String tmp [] = temp.get(i).split(separator);
                 addKnowledges(tmp[0],tmp[1]);
             }
         }
-
     }
 
     public void commonKnowledge() {
         learn("Hello", "Hi");
         learn("Hi", "HI there");
-        learn("Your Name", "Enzy");
+        learn(mContext.getString(R.string.name), "Enzy");
     }
 
     public String showKnowledges() {
         String res = "";
-
         for (int i = 0; i < knowledges.size(); i++) {
             res += (i + 1) + ". " + knowledges.get(i).getQuery() + "\t: " + knowledges.get(i).getResult() +" \n";
         }
-
         return res;
-
     }
 
     public String refresh() {
@@ -140,7 +137,7 @@ public class Brain {
             boolean success = learn(prevQuery,input);
             String tmpQuery = prevQuery;
             prevQuery = "";
-                return "Now I know how to answer '" + tmpQuery + "'";
+                return mContext.getString(R.string.i_know) + " '" + tmpQuery + "'";
         }
         ArrayList<MetaData> results = new ArrayList<>();
         String[] inputs = input.toLowerCase().split(" ");
@@ -152,7 +149,8 @@ public class Brain {
 
             case "about()":
                 this.prevQuery = "";
-                return "Created by NDX";
+                String about = mContext.getString(R.string.about);
+                return about;
 
             case "toggledebug()":
                 this.prevQuery = "";
@@ -172,52 +170,46 @@ public class Brain {
                 this.prevQuery = "";
                 return reset();
         }
-//        boolean findExact = false;
-
         for (int i = 0; i < knowledges.size(); i++) {
             if (knowledges.get(i).getQuery().toLowerCase().contains(input.toLowerCase())) {
-//                findExact = true;
                 results.add(new MetaData(knowledges.get(i).getQuery(), knowledges.get(i).getResult()));
                 break;
             }
-
         }
 
-        if (inputs[0].equals("are") || inputs[0].equals("am") || inputs[0].equals("can") || inputs[0].equals("do")) {
+        if (inputs[0].equals(mContext.getString(R.string.are)) || inputs[0].equals("am") || inputs[0].equals("can") || inputs[0].equals("do")) {
             int angka = (int) Math.round(Math.random());
             if (angka == 0) {
-                return "yes";
+                String yes = mContext.getString(R.string.yes);
+                return yes;
             } else {
-                return "no";
+                String no = mContext.getString(R.string.answer_no);
+                return no;
             }
-
         }
 
-        if (input.toLowerCase().equals("wrong") || input.toLowerCase().equals("no") || input.toLowerCase().equals("n")) {
+        String wrong = mContext.getString(R.string.wrong);
+        String no = mContext.getString(R.string.no);
+        if (input.toLowerCase().equals(wrong) || input.toLowerCase().equals(no) || input.toLowerCase().equals("no") || input.toLowerCase().equals("n")) {
             if (!prevQuery.equals("")) {
                 return dontKnow(prevQuery);
             } else {
-                return "What do you mean " + input + "?";
+                String mean = mContext.getString(R.string.what_do_you_mean); 
+                return mean + input + "?";
             }
         }
 
         for (int i = 0; i < knowledges.size(); i++) {
             for (int j = 0; j < inputs.length; j++) {
-
                 if (inputs[j].length() > 2) {
                     for (int x = 2; x < inputs[j].length(); x++) {
                         String inputnya = inputs[j].toLowerCase().substring(0, x);
-
                         boolean skip = false;
-
                         if (inputs[j].toLowerCase().equals("what")) {
                             skip = true;
-
                         }
-
                         if (!skip && !inputnya.equals("is") && !inputnya.equals("are") && knowledges.get(i).getQuery().contains(inputnya)) {
                             boolean sameAnswer = false;
-
                             if (debugMode) {
                                 Log.d(TAG, "found: " + inputnya);
                             }
@@ -232,10 +224,8 @@ public class Brain {
                                 results.add(new MetaData(knowledges.get(i).getQuery(), knowledges.get(i).getResult()));;
                             }
                         }
-
                     }
                 }
-
             }
         }
 
@@ -246,35 +236,27 @@ public class Brain {
                 maxVote = i;
             }
         }
-
         if (results.size()>0){
             res = results.get(maxVote).getResult();
         }
-
         if (debugMode && !res.equals("")) {
-
             //show all
             res += "\n=================\n";
             for (int i = 0; i < results.size(); i++) {
-                res += results.get(i).getQuery() + " : " + results.get(i).getResult() + " (" + results.get(i).getVote() + " votes)\n";
+                res += results.get(i).getQuery() + " : " + results.get(i).getResult() + " (" + results.get(i).getVote() + " " + mContext.getString(R.string.votes) + ")\n";
             }
-
         }
         if (res.equals("")) {
             return dontKnow(input);
-
         }
-
             this.prevQuery = input;
-
         return res;
-
     }
 
     public String reset(){
         knowledges.clear();
-        writeFile();
-        return "My knowledges has been reset. Teach me from zero";
+        commonKnowledge();
+        return mContext.getString(R.string.reset_knowledges);
     }
 
     public boolean isDebugMode() {
@@ -294,7 +276,6 @@ public class Brain {
         if (success) {
             writeFile();
         }
-
         return success;
     }
 
@@ -312,19 +293,17 @@ public class Brain {
             rearrange();
             return true;
         }
-
         return false;
     }
 
     public String dontKnow(String query) {
         learnMode = true;
         prevQuery = query;
-        return "I dont know how to answer '" + query + "' \n How I should that question ?";
+        return mContext.getString(R.string.how_to_answer) + query + "' \n  " + mContext.getString(R.string.how_should);
     }
 
     public String rearrange() {
         boolean sorted = false;
-
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < knowledges.size() - 1; i++) {
@@ -340,6 +319,6 @@ public class Brain {
             }
         }
         writeFile();
-        return "Rearrange Completed";
+        return mContext.getString(R.string.rearrange);
     }
 }

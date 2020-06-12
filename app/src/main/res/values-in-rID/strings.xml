@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Project Enzy - Bahasa</string>
+    <string name="submit" translatable="false">Kirim</string>
+    <string name="debug_mode">Mode Debug</string>
+    <string name="ask_me">Tanya aku</string>
+    <string name="hello">Oh, Hai kamu, Coba tanyakan aku sesuatu!</string>
+    <string name="toogledebug">"Mode Debug : "</string>
+    <string name="should_answer">Aku seharusnya menjawab : ...</string>
+    <string name="how_should">Bagaimana seharusnya aku menjawab pertanyaan itu ?</string>
+    <string name="english">English</string>
+    <string name="bahasa">Bahasa</string>
+    <string name="name">Nama Kamu</string>
+    <string name="about">Dibuat dengan hati oleh NDX (gabrielglowdy) </string>
+    <string name="what_do_you_mean">Apa maksudmu </string>
+    <string name="wrong">salah</string>
+    <string name="no">Tidak</string>
+    <string name="votes">suara</string>
+    <string name="reset_knowledges">Semua pengetahuanku terhapus, jadi ajari aku dari awal</string>
+    <string name="how_to_answer">Aku tidak tahu bagaimana cara menjawab </string>
+    <string name="rearrange">berhasil rearrange</string>
+    <string name="i_know">Sekarang aku tahu cara menjawab</string>
+    <string name="are">Apakah </string>
+    <string name="yes">ya</string>
+    <string name="answer_no">tidak</string>
+</resources>

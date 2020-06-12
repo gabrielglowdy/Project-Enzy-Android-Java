@@ -3,7 +3,23 @@
     <string name="submit">Submit</string>
     <string name="debug_mode">Debug Mode</string>
     <string name="ask_me">Ask Me</string>
-    <string name="hello">Hello World!</string>
+    <string name="hello">Well, Hello there, try to ask me something !</string>
     <string name="toogledebug">Debug Mode : </string>
     <string name="should_answer">I Should answer : ...</string>
+    <string name="how_should">How I should answer that question ?</string>
+    <string name="english">English</string>
+    <string name="bahasa">Bahasa</string>
+    <string name="name">Your Name</string>
+    <string name="about">Created by NDX</string>
+    <string name="what_do_you_mean">\"What do you mean \"</string>
+    <string name="wrong">wrong</string>
+    <string name="no">No</string>
+    <string name="votes">votes</string>
+    <string name="reset_knowledges">My knowledges has been reset. Teach me from zero</string>
+    <string name="how_to_answer">I dont know how to answer \'</string>
+    <string name="rearrange">Rearrange Completed</string>
+    <string name="i_know">Now I know how to answer</string>
+    <string name="are">are</string>
+    <string name="yes">yes</string>
+    <string name="answer_no">no</string>
 </resources>

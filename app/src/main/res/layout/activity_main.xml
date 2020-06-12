@@ -38,7 +38,7 @@
         android:id="@+id/btAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
         android:background="@drawable/button"
         android:onClick="think"
         android:textColor="@color/white"
@@ -51,11 +51,10 @@
         android:id="@+id/swDebug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:switchPadding="10dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:switchPadding="@dimen/padding"
         android:text="@string/debug_mode"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -85,7 +84,7 @@
         android:hapticFeedbackEnabled="true"
         android:singleLine="false"
         android:text="@string/hello"
-        android:textAlignment="center"
+        android:textAlignment="gravity"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -93,5 +92,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <Switch
+        android:id="@+id/swLang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="@string/english"
+        android:textOn="@string/bahasa"
+        android:switchPadding="@dimen/padding"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/swDebug" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
